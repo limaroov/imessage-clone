@@ -12,4 +12,10 @@ export default NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      return { ...session, user: { ...session.user, ...user } };
+    },
+  },
 });
